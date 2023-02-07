@@ -20,8 +20,20 @@ jobs:
         dotnet-version: 7.0.x
         
     - name: Restore dependencies
+      working-directory: AzFormRecognizerToSQL
       run: dotnet restore
       
     - name: Build
-      run: dotnet build --no-restore
+      working-directory: AzFormRecognizerToSQL
+      run: dotnet build --no-restore -c Release
+      
+    - name: Pack
+      working-directory: AzFormRecognizerToSQL
+      run: |
+        dotnet pack -c Release
+        
+    - name: Publish
+      working-directory: AzFormRecognizerToSQL/bin/Release
+      run: |
+        dotnet nuget push *.nupkg --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json
       
