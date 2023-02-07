@@ -5,9 +5,10 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <PackageId>AzFormRecognizer.Table.ToSQL</PackageId>
-    <Version>0.1.1</Version>
+    <Version>0.1.2</Version>
     <Authors>Paul Riviera</Authors>
-    <WebPage>https://github.com/PaulRiviera/AzFormRecognizerToSQL</WebPage>
+    <PackageDescription>Convert Azure Form Recognizer Table output to T-SQL commands</PackageDescription>
+    <RepositoryUrl>https://github.com/PaulRiviera/AzFormRecognizerToSQL</RepositoryUrl>
   </PropertyGroup>
 
   <ItemGroup>
