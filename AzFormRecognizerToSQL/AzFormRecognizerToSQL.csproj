@@ -5,7 +5,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <PackageId>AzFormRecognizer.Table.ToSQL</PackageId>
-    <Version>0.1.0</Version>
+    <Version>0.1.1</Version>
     <Authors>Paul Riviera</Authors>
     <WebPage>https://github.com/PaulRiviera/AzFormRecognizerToSQL</WebPage>
   </PropertyGroup>

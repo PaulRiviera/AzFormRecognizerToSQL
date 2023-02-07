@@ -8,7 +8,7 @@ namespace AzFormRecognizer.Table.ToSQL
     {
         public delegate void ConfigureTables(List<Table> tables, DocumentDetails documentDetails);
 
-        public static List<string> ToSQLAsync(this IReadOnlyList<DocumentTable> tables, DocumentDetails documentDetails, ConfigureTables handler)
+        public static List<string> ToSQL(this IReadOnlyList<DocumentTable> tables, DocumentDetails documentDetails, ConfigureTables handler)
         {
             List<Table> parsedTable = tables.Select(table => ParseTable(table)).ToList();
 
