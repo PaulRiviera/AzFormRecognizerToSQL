@@ -3,8 +3,12 @@ name: Publish to Nuget.org
 on:
   push:
     branches: [ "main" ]
+    paths:
+      - "AzFormRecognizerToSQL/**"
   pull_request:
     branches: [ "main" ]
+    paths:
+      - "AzFormRecognizerToSQL/**"
 
 jobs:
   publish:
