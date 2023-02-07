@@ -7,8 +7,8 @@ on:
     branches: [ "main" ]
 
 jobs:
-  build:
-  
+  publish:
+    name: Publish to Nuget.org
     runs-on: ubuntu-latest
 
     steps:
