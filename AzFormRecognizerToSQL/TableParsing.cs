@@ -1,4 +1,7 @@
-﻿using Azure.AI.FormRecognizer.DocumentAnalysis;
+﻿using System;
+using System.Linq;
+using System.Collections.Generic;
+using Azure.AI.FormRecognizer.DocumentAnalysis;
 
 namespace AzFormRecognizer.Table.ToSQL
 {
