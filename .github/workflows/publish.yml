@@ -10,7 +10,7 @@ on:
     paths:
       - "AzFormRecognizerToSQL/**"
 
-workflow_dispatch:
+  workflow_dispatch:
 
 jobs:
   test:
