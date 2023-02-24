@@ -5,11 +5,17 @@ using System.Collections.Generic;
 
 namespace AzFormRecognizer.Table.ToSQL
 {
-    partial class DocumentTableExtension
+    public class SQLCommandBuilder
     {
-        private static List<string> TableSQLCommands(IEnumerable<Table> tables)
+        public static List<string> TableSQLCommands(IEnumerable<Table> tables)
         {
-            var commands = tables.Select(table => CreateTableSQLCommands(table)).ToList();
+            return TableSQLCommands(tables, SQLCommandBuilderOptions.Default);
+        }
+
+        public static List<string> TableSQLCommands(IEnumerable<Table> tables, SQLCommandBuilderOptions options)
+        {
+
+            var commands = tables.Select(table => CreateTableSQLCommands(table, options.IgnoreCreateIfTableExists)).ToList();
 
             foreach (var table in tables)
             {
@@ -25,27 +31,39 @@ namespace AzFormRecognizer.Table.ToSQL
             return commands;
         }
 
-        private static string CreateTableSQLCommands(Table table)
+        private static string CreateTableSQLCommands(Table table, bool createIfNotExists = true)
         {
             if (table.Title == null)
             {
                 throw new Exception("Table title is null");
             }
 
-            var sql = $"CREATE TABLE {table.Title.Replace(" ", "")} (";
-
             if (table?.Headers == null)
             {
                 throw new Exception("Table headers are null");
             }
 
+            var columns = string.Empty;
             foreach (var header in table.Headers)
             {
-                sql += GetColumn(header.Value);
+                columns += GetColumn(header.Value);
             }
-            sql = sql.Remove(sql.Length - 2);
-            sql += ");";
-            return sql;
+            columns = columns.Remove(columns.Length - 2);
+
+
+            var tableName = table.Title.Replace(" ", "");
+            var sqlCmd = string.Empty;
+
+            if (createIfNotExists)
+            {
+                sqlCmd = $"IF (OBJECT_ID(N'dbo.{tableName}', N'U') IS NULL) BEGIN CREATE TABLE dbo.{tableName} ({columns}) END";
+            }
+            else
+            {
+                sqlCmd = $"CREATE TABLE {tableName} ({columns})";
+            }
+
+            return sqlCmd;
         }
 
         private static string CreateTableInsertSQLCommands(string tableTitle, Dictionary<string, string> row)
@@ -113,19 +131,16 @@ namespace AzFormRecognizer.Table.ToSQL
 
             if (header.TableKey != null && header.TableKey.Type == TableKeyType.Primary)
             {
-                primaryKey = "PRIMARY KEY";
+                primaryKey = " PRIMARY KEY";
                 if (header.DataType == ColumnDataTypes.INT)
                 {
-                    canBeNull = "";
-                    primaryKey = $"IDENTITY(1,1) {primaryKey}";
+                    primaryKey = $" IDENTITY(1,1){primaryKey}";
                 }
-                else
-                {
-                    canBeNull = "NOT NULL";
-                }
+
+                canBeNull = " NOT NULL";
             }
 
-            return $"{name} {typeName} {primaryKey} {foreignKey} {canBeNull}, ";
+            return $"{name} {typeName} {primaryKey}{foreignKey}{canBeNull}, ";
         }
     }
 }

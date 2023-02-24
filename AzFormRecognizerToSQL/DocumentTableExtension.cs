@@ -16,7 +16,7 @@ namespace AzFormRecognizer.Table.ToSQL
 
             handler(parsedTable, documentDetails);
 
-            var commands = TableSQLCommands(parsedTable);
+            var commands = SQLCommandBuilder.TableSQLCommands(parsedTable);
 
             return commands;
         }
