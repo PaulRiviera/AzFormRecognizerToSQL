@@ -30,7 +30,10 @@ jobs:
         
     - name: Test
       working-directory: AzFormRecognizerToSQL.Tests
-      run: dotnet test
+      run: |
+        dotnet restore
+        dotnet build --no-restore
+        dotnet test
 
   publish:
     name: Publish to Nuget.org
