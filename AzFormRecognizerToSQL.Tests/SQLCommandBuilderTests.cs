@@ -1,3 +1,6 @@
+using System;
+using System.Collections.Generic;
+using Xunit;
 using AzFormRecognizer.Table;
 using AzFormRecognizer.Table.ToSQL;
 
@@ -42,8 +45,6 @@ public class SQLCommandBuilderTests
         table.Rows.Add(new Dictionary<string, string>() { { "Column 2", "5" }, { "Column 3", "6" } });
         
         var sqlCmd = SQLCommandBuilder.TableSQLCommands(new List<Table>() { table }, new SQLCommandBuilderOptions() { IgnoreCreateIfTableExists = false });
-
-        Console.WriteLine(sqlCmd[0]);
 
         Assert.Equal(3, sqlCmd.Count);
         Assert.Equal("CREATE TABLE TestDataTwo (Column1 int  IDENTITY(1,1) PRIMARY KEY NOT NULL, Column2 int NULL, Column3 int NULL)", sqlCmd[0]);
